@@ -1,7 +1,45 @@
-node_modules
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+deploy/
+deploy-bundled/
+*.zip
+
+# Testing
+coverage/
+.nyc_output/
 
 # Terraform
-.terraform/
-*.tfstate
-*.tfstate.*
-tfplan
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/tfplan
+terraform/*.tfvars
+!terraform/terraform.tfvars.example
+
+# SAM
+.aws-sam/
+samconfig.toml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+.env.local
+.env.*.local

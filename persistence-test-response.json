@@ -1,1 +1,0 @@
-{"errorType":"SyntaxError","errorMessage":"\"undefined\" is not valid JSON","trace":["SyntaxError: \"undefined\" is not valid JSON","    at JSON.parse (<anonymous>)","    at Runtime.Eje [as handler] (/var/task/index.js:54:303213)","    at Runtime.handleOnceNonStreaming (file:///var/runtime/index.mjs:1306:29)"]}
