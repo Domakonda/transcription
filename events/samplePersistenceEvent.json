@@ -1,0 +1,38 @@
+{
+  "Records": [
+    {
+      "eventVersion": "2.1",
+      "eventSource": "aws:s3",
+      "awsRegion": "us-east-1",
+      "eventTime": "2026-01-10T12:00:00.000Z",
+      "eventName": "ObjectCreated:Put",
+      "userIdentity": {
+        "principalId": "AWS:AIDAI..."
+      },
+      "requestParameters": {
+        "sourceIPAddress": "52.46.xxx.xxx"
+      },
+      "responseElements": {
+        "x-amz-request-id": "test-request-id",
+        "x-amz-id-2": "test-id-2"
+      },
+      "s3": {
+        "s3SchemaVersion": "1.0",
+        "configurationId": "bedrock-output-notification",
+        "bucket": {
+          "name": "pgr-experiment-data",
+          "ownerIdentity": {
+            "principalId": "test-principal"
+          },
+          "arn": "arn:aws:s3:::pgr-experiment-data"
+        },
+        "object": {
+          "key": "transcription-outputs/test-call-001/output.json",
+          "size": 1024,
+          "eTag": "test-etag",
+          "sequencer": "test-sequencer"
+        }
+      }
+    }
+  ]
+}

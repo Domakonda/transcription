@@ -1,0 +1,44 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowBedrockDataAutomationRead",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "bedrock.amazonaws.com"
+      },
+      "Action": [
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::pgr-experiment-data",
+        "arn:aws:s3:::pgr-experiment-data/*"
+      ],
+      "Condition": {
+        "StringEquals": {
+          "aws:SourceAccount": "488786173548"
+        }
+      }
+    },
+    {
+      "Sid": "AllowBedrockDataAutomationWrite",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "bedrock.amazonaws.com"
+      },
+      "Action": [
+        "s3:PutObject",
+        "s3:PutObjectAcl"
+      ],
+      "Resource": [
+        "arn:aws:s3:::pgr-experiment-data/bedrock-output/*"
+      ],
+      "Condition": {
+        "StringEquals": {
+          "aws:SourceAccount": "488786173548"
+        }
+      }
+    }
+  ]
+}

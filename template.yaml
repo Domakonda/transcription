@@ -1,0 +1,166 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: AWS SAM template for Bedrock Data Automation local testing
+
+Globals:
+  Function:
+    Timeout: 300
+    MemorySize: 512
+    Runtime: nodejs20.x
+    Architectures:
+      - x86_64
+    Environment:
+      Variables:
+        AWS_REGION: us-east-1
+        BEDROCK_PROJECT_ARN: !Ref BedrockProjectArn
+        S3_INPUT_BUCKET: !Ref S3InputBucket
+        S3_OUTPUT_BUCKET: !Ref S3OutputBucket
+        DYNAMODB_TABLE_NAME: !Ref DynamoDBTableName
+
+Parameters:
+  BedrockProjectArn:
+    Type: String
+    Default: "arn:aws:bedrock:us-east-1:123456789012:data-automation-project/test-project"
+    Description: ARN of the Bedrock Data Automation project
+
+  S3InputBucket:
+    Type: String
+    Default: "test-input-bucket"
+    Description: Name of the S3 input bucket
+
+  S3OutputBucket:
+    Type: String
+    Default: "test-output-bucket"
+    Description: Name of the S3 output bucket
+
+  DynamoDBTableName:
+    Type: String
+    Default: "conversational-analytics-dev-call-recordings"
+    Description: Name of the DynamoDB table
+
+Resources:
+  # Lambda Function: S3 Trigger
+  S3TriggerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: dist/
+      Handler: handlers/s3-trigger.handler
+      Description: Triggered by S3 upload, invokes Bedrock Data Automation
+      Events:
+        S3Event:
+          Type: S3
+          Properties:
+            Bucket: !Ref InputBucket
+            Events: s3:ObjectCreated:*
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: suffix
+                    Value: .mp3
+      Policies:
+        - S3ReadPolicy:
+            BucketName: !Ref S3InputBucket
+        - Statement:
+            - Effect: Allow
+              Action:
+                - bedrock:InvokeDataAutomationAsync
+                - bedrock:GetDataAutomationStatus
+              Resource: '*'
+
+  # S3 Bucket for Input (for SAM local testing)
+  InputBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref S3InputBucket
+
+  # Lambda Function: S3 Output Trigger
+  S3OutputTriggerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: dist/
+      Handler: handlers/s3-output-trigger.handler
+      Description: Processes Bedrock results and writes to DynamoDB
+      Events:
+        S3OutputEvent:
+          Type: S3
+          Properties:
+            Bucket: !Ref OutputBucket
+            Events: s3:ObjectCreated:*
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: suffix
+                    Value: results.json
+      Policies:
+        - S3ReadPolicy:
+            BucketName: !Ref S3OutputBucket
+        - DynamoDBCrudPolicy:
+            TableName: !Ref DynamoDBTableName
+
+  # S3 Bucket for Output (for SAM local testing)
+  OutputBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref S3OutputBucket
+
+  # Lambda Function: API Get Analytics
+  ApiGetAnalyticsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: dist/
+      Handler: handlers/api-get-analytics.handler
+      Description: API endpoint to retrieve analytics by hash
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /analytics/{hash}
+            Method: get
+            RestApiId: !Ref AnalyticsApi
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref DynamoDBTableName
+
+  # API Gateway
+  AnalyticsApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: dev
+      Cors:
+        AllowMethods: "'GET, OPTIONS'"
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+        AllowOrigin: "'*'"
+
+  # DynamoDB Table (for SAM local testing)
+  CallRecordingsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref DynamoDBTableName
+      AttributeDefinitions:
+        - AttributeName: hash
+          AttributeType: S
+        - AttributeName: epchdatetimestamp
+          AttributeType: N
+      KeySchema:
+        - AttributeName: hash
+          KeyType: HASH
+        - AttributeName: epchdatetimestamp
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
+
+Outputs:
+  ApiEndpoint:
+    Description: "API Gateway endpoint URL"
+    Value: !Sub "https://${AnalyticsApi}.execute-api.${AWS::Region}.amazonaws.com/dev/analytics/{hash}"
+
+  S3TriggerFunction:
+    Description: "S3 Trigger Lambda Function ARN"
+    Value: !GetAtt S3TriggerFunction.Arn
+
+  S3OutputTriggerFunction:
+    Description: "S3 Output Trigger Lambda Function ARN"
+    Value: !GetAtt S3OutputTriggerFunction.Arn
+
+  ApiGetAnalyticsFunction:
+    Description: "API Get Analytics Lambda Function ARN"
+    Value: !GetAtt ApiGetAnalyticsFunction.Arn

@@ -1,0 +1,62 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Bedrock Data Automation for Audio Conversational Analytics'
+
+Resources:
+  MyAudioBlueprint:
+    Type: AWS::Bedrock::Blueprint
+    Properties:
+      BlueprintName: dmg-inbound-transcription-blueprint
+      Type: AUDIO
+      Schema:
+        class: ConversationalAnalytics
+        description: Custom blueprint for audio conversational analytics
+        properties:
+          call_summary:
+            type: string
+            inferenceType: inferred
+            instruction: "Summarize the caller-agent conversation in under 100 words. Start with the caller's request, then the agent's response and actions, ending with outcomes or follow-ups."
+          call_categories:
+            type: array
+            items:
+              type: string
+            inferenceType: inferred
+            instruction: "The category (or categories) of the call. Choose one or more from Billing, Tech support, Customer service, Account support, Sales, Complaints, Product issues, Service issues, General inquiries, Other."
+          topics:
+            type: array
+            items:
+              type: string
+            inferenceType: inferred
+            instruction: "The main topics of the audio transcript, listed as single words."
+
+  MyDataAutomationProject:
+    Type: AWS::Bedrock::DataAutomationProject
+    DependsOn: MyAudioBlueprint
+    Properties:
+      ProjectName: dmg-inbound-transcription-post-call-analytics
+      ProjectDescription: BDA project for audio transcription and post call analytics
+      CustomOutputConfiguration:
+        Blueprints:
+          - BlueprintArn: !GetAtt MyAudioBlueprint.BlueprintArn
+            BlueprintStage: LIVE 
+      StandardOutputConfiguration:
+        Audio:
+          Extraction:
+            Category:
+              State: ENABLED
+              Types:
+                - TRANSCRIPT
+                - AUDIO_CONTENT_MODERATION
+          GenerativeField:
+            State: ENABLED
+            Types:
+              - AUDIO_SUMMARY
+              - TOPIC_SUMMARY
+
+Outputs:
+  BlueprintArn:
+    Description: ARN of the created blueprint
+    Value: !GetAtt MyAudioBlueprint.BlueprintArn
+  ProjectArn:
+    Description: ARN of the created project
+    Value: !GetAtt MyDataAutomationProject.ProjectArn
+          

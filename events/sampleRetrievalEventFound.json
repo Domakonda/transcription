@@ -1,0 +1,44 @@
+{
+  "resource": "/analytics/{hash}",
+  "path": "/analytics/abc123def456",
+  "httpMethod": "GET",
+  "headers": {
+    "Accept": "application/json",
+    "CloudFront-Forwarded-Proto": "https",
+    "CloudFront-Is-Desktop-Viewer": "true",
+    "CloudFront-Is-Mobile-Viewer": "false",
+    "CloudFront-Viewer-Country": "US",
+    "Host": "3qcv9fvb6l.execute-api.us-east-1.amazonaws.com",
+    "User-Agent": "curl/7.68.0",
+    "X-Forwarded-For": "203.0.113.1",
+    "X-Forwarded-Port": "443",
+    "X-Forwarded-Proto": "https"
+  },
+  "multiValueHeaders": {},
+  "queryStringParameters": {
+    "pageSize": "10",
+    "nextToken": null
+  },
+  "multiValueQueryStringParameters": {},
+  "pathParameters": {
+    "hash": "abc123def456"
+  },
+  "stageVariables": null,
+  "requestContext": {
+    "resourceId": "test-resource",
+    "resourcePath": "/analytics/{hash}",
+    "httpMethod": "GET",
+    "requestId": "test-request-id",
+    "accountId": "488786173548",
+    "stage": "dev",
+    "protocol": "HTTP/1.1",
+    "identity": {
+      "sourceIp": "203.0.113.1",
+      "userAgent": "curl/7.68.0"
+    },
+    "requestTime": "10/Jan/2026:12:00:00 +0000",
+    "requestTimeEpoch": 1704891600000
+  },
+  "body": null,
+  "isBase64Encoded": false
+}
