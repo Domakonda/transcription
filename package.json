@@ -18,6 +18,9 @@
   "devDependencies": {
     "@types/aws-lambda": "^8.10.145",
     "@types/node": "^22.10.5",
-    "typescript": "^5.7.2"
+    "archiver": "^7.0.1",
+    "esbuild": "^0.24.2",
+    "typescript": "^5.7.2",
+    "yarn": "^1.22.22"
   }
 }

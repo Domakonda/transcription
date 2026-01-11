@@ -1,0 +1,20 @@
+{
+  "Records": [
+    {
+      "messageId": "e2e-test-message-002",
+      "receiptHandle": "test-receipt-handle",
+      "body": "{\"Type\":\"Notification\",\"MessageId\":\"e2e-test-sns-message\",\"TopicArn\":\"arn:aws:sns:us-east-1:488786173548:dmg-inbound-callrecording-transcript\",\"Subject\":null,\"Message\":\"{\\\"callId\\\":\\\"e2e-test-20260111\\\",\\\"audioS3Uri\\\":\\\"s3://pgr-experiment-data-us-east-1/raw-audio/34210__acclivity__i-am-female.wav\\\"}\",\"Timestamp\":\"2026-01-11T18:30:00.000Z\",\"SignatureVersion\":\"1\",\"Signature\":\"test-signature\",\"SigningCertURL\":\"https://sns.us-east-1.amazonaws.com/test.pem\",\"UnsubscribeURL\":\"https://sns.us-east-1.amazonaws.com/unsubscribe\"}",
+      "attributes": {
+        "ApproximateReceiveCount": "1",
+        "SentTimestamp": "1736623800000",
+        "SenderId": "AIDAIT2UOQQY3AUEKVGXU",
+        "ApproximateFirstReceiveTimestamp": "1736623800000"
+      },
+      "messageAttributes": {},
+      "md5OfBody": "test-md5",
+      "eventSource": "aws:sqs",
+      "eventSourceARN": "arn:aws:sqs:us-east-1:488786173548:dmg-inbound-callrecording-transcript-sqs-queue",
+      "awsRegion": "us-east-1"
+    }
+  ]
+}

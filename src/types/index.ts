@@ -15,6 +15,20 @@ export interface BedrockDataAutomationOutput {
   outputS3Uri?: string;
 }
 
+// Bedrock Data Automation Result Structure
+export interface BedrockResult {
+  metadata?: {
+    dominant_asset_language?: string;
+    generative_output_language?: string;
+  };
+  matched_blueprint?: {
+    arn: string;
+    name: string;
+    confidence: number;
+  };
+  inference_result: ConversationalAnalytics;
+}
+
 // Conversational Analytics Schema
 export interface ConversationalAnalytics {
   call_summary: string;

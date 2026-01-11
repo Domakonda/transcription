@@ -1,0 +1,20 @@
+{
+  "Records": [
+    {
+      "messageId": "test-persistence-001",
+      "receiptHandle": "test-receipt",
+      "body": "{\"Records\":[{\"eventVersion\":\"2.1\",\"eventSource\":\"aws:s3\",\"awsRegion\":\"us-east-1\",\"eventTime\":\"2026-01-11T18:25:40.000Z\",\"eventName\":\"ObjectCreated:Put\",\"s3\":{\"bucket\":{\"name\":\"pgr-experiment-data-us-east-1\"},\"object\":{\"key\":\"transcription-outputs/e2e-test-20260111//429ce979-f39c-425c-b4ab-6127a1c51f20/0/custom_output/0/result.json\",\"size\":919}}}]}",
+      "attributes": {
+        "ApproximateReceiveCount": "1",
+        "SentTimestamp": "1736623540000",
+        "SenderId": "test-sender",
+        "ApproximateFirstReceiveTimestamp": "1736623540000"
+      },
+      "messageAttributes": {},
+      "md5OfBody": "test-md5",
+      "eventSource": "aws:sqs",
+      "eventSourceARN": "arn:aws:sqs:us-east-1:488786173548:conversational-analytics-dev-s3-bedrock-output-queue",
+      "awsRegion": "us-east-1"
+    }
+  ]
+}

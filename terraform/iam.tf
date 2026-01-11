@@ -65,7 +65,8 @@ resource "aws_iam_policy" "lambda_custom" {
           "dynamodb:PutItem",
           "dynamodb:GetItem",
           "dynamodb:Query",
-          "dynamodb:UpdateItem"
+          "dynamodb:UpdateItem",
+          "dynamodb:Scan"
         ]
         Resource = aws_dynamodb_table.call_recordings.arn
       },
