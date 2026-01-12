@@ -29,10 +29,8 @@ Lambda Function (dmg-inbound-callrecording-transcription)
     └─ Custom analytics (call summary, categories, topics)
             ↓
     S3 Output (transcription results JSON)
-            ↓ (S3 Event Notification)
-    SNS Topic (s3-bedrock-output)
-            ↓ (SNS Subscription)
-    SQS Queue (dmg-inbound-callrecording-persistence)
+            ↓ (S3 Event Notification - Direct to SQS)
+    SQS Queue (s3-bedrock-output-queue)
             ↓ (Event Source Mapping - Batch: 1, Max Concurrency: 10)
     Lambda Function (dmg-inbound-callrecording-persistence)
     ├─ Reads S3 transcription results
@@ -78,7 +76,6 @@ All infrastructure is managed via Terraform in the `terraform/` directory.
 
 - **SNS Topics**:
   - `dmg-inbound-callrecording-transcript` - Audio upload notifications
-  - `s3-bedrock-output` - Bedrock result notifications
 
 - **SQS Queues**:
   - `dmg-inbound-callrecording-transcription` - Transcription requests
@@ -86,7 +83,7 @@ All infrastructure is managed via Terraform in the `terraform/` directory.
     - Message retention: 4 days
     - Batch size: 1 message
     - Maximum concurrency: 10
-  - `dmg-inbound-callrecording-persistence` - Persistence requests
+  - `s3-bedrock-output-queue` - Bedrock result notifications (direct from S3)
     - Visibility timeout: 900s
     - Message retention: 4 days
     - Batch size: 1 message
@@ -585,8 +582,8 @@ curl "https://your-api.execute-api.us-east-1.amazonaws.com/prod?hash=abc123&last
 ## Troubleshooting
 
 ### Transcription not starting
-1. Check S3 event notification configuration
-2. Verify SNS topic subscription to SQS
+1. Check S3 event notification configuration (input bucket → SNS → SQS)
+2. Verify SNS topic subscription to transcription SQS queue
 3. Check Lambda CloudWatch logs
 4. Verify IAM permissions for Lambda to read S3
 
@@ -597,10 +594,11 @@ curl "https://your-api.execute-api.us-east-1.amazonaws.com/prod?hash=abc123&last
 4. Check DLQ for failed messages
 
 ### Results not persisting
-1. Check S3 output bucket event notifications
+1. Check S3 output bucket event notifications (direct to s3-bedrock-output-queue)
 2. Verify persistence Lambda is triggered (CloudWatch logs)
-3. Check IAM permissions for DynamoDB write
-4. Verify DynamoDB table name in environment variables
+3. Check SQS queue policy allows S3 to send messages
+4. Check IAM permissions for DynamoDB write
+5. Verify DynamoDB table name in environment variables
 
 ### API returns empty results
 1. Verify hash value is correct
