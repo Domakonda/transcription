@@ -41,7 +41,7 @@ All infrastructure is managed via Terraform in the `terraform/` directory:
 
 ### 1. Install Dependencies
 ```bash
-npm install
+yarn install
 ```
 
 ### 2. Deploy Infrastructure
@@ -55,12 +55,12 @@ terraform apply
 ### 3. Build and Deploy Lambda Functions
 ```bash
 # Build all Lambda functions
-npm run build:lambda
+yarn build:lambda
 
 # Deploy individual functions
-npm run deploy:transcription
-npm run deploy:persistence
-npm run deploy:retrieval
+yarn deploy:transcription
+yarn deploy:persistence
+yarn deploy:retrieval
 ```
 
 ## Testing

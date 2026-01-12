@@ -73,6 +73,17 @@ resource "aws_iam_policy" "lambda_custom" {
       {
         Effect = "Allow"
         Action = [
+          "dynamodb:PutItem",
+          "dynamodb:GetItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:Scan",
+          "dynamodb:Query"
+        ]
+        Resource = aws_dynamodb_table.quota_tracking.arn
+      },
+      {
+        Effect = "Allow"
+        Action = [
           "bedrock:InvokeDataAutomationAsync",
           "bedrock:GetDataAutomationStatus",
           "bedrock:ListDataAutomationProjects",

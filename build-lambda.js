@@ -74,7 +74,7 @@ async function buildLambda(config) {
   );
 
   console.log(`📦 Installing dependencies for ${config.name}...`);
-  execSync('npm install --production --silent', {
+  execSync('yarn install --production --silent', {
     cwd: outDir,
     stdio: 'inherit',
   });
