@@ -606,16 +606,3 @@ curl "https://your-api.execute-api.us-east-1.amazonaws.com/prod?hash=abc123&last
 3. Review retrieval Lambda logs for errors
 4. Verify API Gateway integration with Lambda
 
-## Additional Documentation
-
-- `AWS_Service_Constraints.md` - AWS service limits and quotas
-- `BDA_High_Volume_Processing_Guide.md` - Scaling to 200 files/minute
-- `Complete_Beginner_Training_Guide.md` - Tutorial for building from scratch
-- `Bedrock_Profile_ARN_Explained.md` - Understanding Bedrock Profile ARN
-- `Environment_Variables_Best_Practices.md` - Configuration management guide
-- `Current_Architecture_Documentation.md` - Detailed architecture overview
-- `EventBridge_Quota_Management_Proposal.md` - Future quota management design
-
-## License
-
-Proprietary
