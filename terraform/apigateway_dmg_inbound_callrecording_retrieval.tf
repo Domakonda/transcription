@@ -1,4 +1,4 @@
-# API Gateway for dmg-inbound-callrecording-retrieval Lambda
+# API Gateway for adom-inbound-callrecording-retrieval Lambda
 # Receives requests from UI and triggers Lambda 3
 
 # IAM Role for API Gateway CloudWatch Logging
@@ -33,7 +33,7 @@ resource "aws_api_gateway_account" "main" {
 
 # API Gateway REST API
 resource "aws_api_gateway_rest_api" "analytics_api" {
-  name        = "dmg-inbound-callrecording-analytics-api"
+  name        = "adom-inbound-callrecording-analytics-api"
   description = "API Gateway for call recording analytics retrieval"
 
   endpoint_configuration {
@@ -76,7 +76,7 @@ resource "aws_api_gateway_integration" "lambda_integration_retrieval" {
   http_method             = aws_api_gateway_method.get_analytics.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.dmg_inbound_callrecording_retrieval.invoke_arn
+  uri                     = aws_lambda_function.adom_inbound_callrecording_retrieval.invoke_arn
 }
 
 # API Gateway Method: GET /analytics (list recent)
@@ -94,7 +94,7 @@ resource "aws_api_gateway_integration" "lambda_integration_list" {
   http_method             = aws_api_gateway_method.get_analytics_list.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.dmg_inbound_callrecording_retrieval.invoke_arn
+  uri                     = aws_lambda_function.adom_inbound_callrecording_retrieval.invoke_arn
 }
 
 # API Gateway Method: OPTIONS /analytics/{hash} (CORS)
@@ -206,7 +206,7 @@ resource "aws_api_gateway_stage" "analytics_stage" {
 
 # CloudWatch Log Group for API Gateway
 resource "aws_cloudwatch_log_group" "api_gateway_logs" {
-  name              = "/aws/apigateway/dmg-inbound-callrecording-analytics-api"
+  name              = "/aws/apigateway/adom-inbound-callrecording-analytics-api"
   retention_in_days = 14
 
   tags = local.common_tags

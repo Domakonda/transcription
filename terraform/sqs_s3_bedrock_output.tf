@@ -78,7 +78,7 @@ resource "aws_s3_bucket_notification" "bedrock_output_notification" {
 # Lambda Event Source Mapping - Connect SQS to Persistence Lambda
 resource "aws_lambda_event_source_mapping" "sqs_to_lambda_persistence_bedrock" {
   event_source_arn = aws_sqs_queue.s3_bedrock_output.arn
-  function_name    = aws_lambda_function.dmg_inbound_callrecording_persistence.arn
+  function_name    = aws_lambda_function.adom_inbound_callrecording_persistence.arn
   batch_size       = 1
   enabled          = true
 

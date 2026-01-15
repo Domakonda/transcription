@@ -1,13 +1,13 @@
-# Lambda Function: dmg-inbound-callrecording-retrieval
+# Lambda Function: adom-inbound-callrecording-retrieval
 # Triggered by API Gateway, reads from DynamoDB and returns to UI
 
 # Note: For mono repo architecture, application code is deployed separately
 # Initial deployment uses placeholder Lambda to allow infrastructure provisioning
 
 # Lambda Function
-resource "aws_lambda_function" "dmg_inbound_callrecording_retrieval" {
+resource "aws_lambda_function" "adom_inbound_callrecording_retrieval" {
   filename         = "${path.module}/lambda_placeholder_retrieval.zip"
-  function_name    = "dmg-inbound-callrecording-retrieval"
+  function_name    = "adom-inbound-callrecording-retrieval"
   role             = aws_iam_role.lambda_execution.arn
   handler          = "index.handler"
   source_code_hash = filebase64sha256("${path.module}/lambda_placeholder_retrieval.zip")
@@ -31,14 +31,14 @@ resource "aws_lambda_function" "dmg_inbound_callrecording_retrieval" {
   tags = merge(
     local.common_tags,
     {
-      Name = "dmg-inbound-callrecording-retrieval"
+      Name = "adom-inbound-callrecording-retrieval"
     }
   )
 }
 
 # CloudWatch Log Group
-resource "aws_cloudwatch_log_group" "dmg_inbound_callrecording_retrieval" {
-  name              = "/aws/lambda/dmg-inbound-callrecording-retrieval"
+resource "aws_cloudwatch_log_group" "adom_inbound_callrecording_retrieval" {
+  name              = "/aws/lambda/adom-inbound-callrecording-retrieval"
   retention_in_days = 14
 
   tags = local.common_tags
@@ -48,7 +48,7 @@ resource "aws_cloudwatch_log_group" "dmg_inbound_callrecording_retrieval" {
 resource "aws_lambda_permission" "api_gateway_invoke_retrieval" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.dmg_inbound_callrecording_retrieval.function_name
+  function_name = aws_lambda_function.adom_inbound_callrecording_retrieval.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_api_gateway_rest_api.analytics_api.execution_arn}/*/*"
 }

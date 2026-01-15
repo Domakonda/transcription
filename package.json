@@ -5,9 +5,9 @@
   "scripts": {
     "build": "tsc",
     "build:lambda": "node build-lambda.js",
-    "deploy:transcription": "aws lambda update-function-code --function-name dmg-inbound-callrecording-transcription --zip-file fileb://deploy-bundled/lambda-transcription-bundled.zip --region us-east-1",
-    "deploy:persistence": "aws lambda update-function-code --function-name dmg-inbound-callrecording-persistence --zip-file fileb://deploy-bundled/lambda-persistence-bundled.zip --region us-east-1",
-    "deploy:retrieval": "aws lambda update-function-code --function-name dmg-inbound-callrecording-retrieval --zip-file fileb://deploy-bundled/lambda-retrieval-bundled.zip --region us-east-1"
+    "deploy:transcription": "aws lambda update-function-code --function-name adom-inbound-callrecording-transcription --zip-file fileb://deploy-bundled/lambda-transcription-bundled.zip --region us-east-1",
+    "deploy:persistence": "aws lambda update-function-code --function-name adom-inbound-callrecording-persistence --zip-file fileb://deploy-bundled/lambda-persistence-bundled.zip --region us-east-1",
+    "deploy:retrieval": "aws lambda update-function-code --function-name adom-inbound-callrecording-retrieval --zip-file fileb://deploy-bundled/lambda-retrieval-bundled.zip --region us-east-1"
   },
   "dependencies": {
     "@aws-sdk/client-bedrock-data-automation-runtime": "^3.729.0",

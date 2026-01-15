@@ -14,17 +14,17 @@ const { execSync } = require('child_process');
 const lambdas = [
   {
     name: 'transcription',
-    handler: 'dmg-inbound-callrecording-transcription',
+    handler: 'adom-inbound-callrecording-transcription',
     dependencies: ['@aws-sdk/client-bedrock-data-automation-runtime'],
   },
   {
     name: 'persistence',
-    handler: 'dmg-inbound-callrecording-persistence',
+    handler: 'adom-inbound-callrecording-persistence',
     dependencies: ['@aws-sdk/client-s3', '@aws-sdk/client-dynamodb', '@aws-sdk/lib-dynamodb'],
   },
   {
     name: 'retrieval',
-    handler: 'dmg-inbound-callrecording-retrieval',
+    handler: 'adom-inbound-callrecording-retrieval',
     dependencies: ['@aws-sdk/client-dynamodb', '@aws-sdk/lib-dynamodb'],
   },
 ];

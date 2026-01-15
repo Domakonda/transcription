@@ -24,44 +24,44 @@ output "s3_output_prefix" {
 # SNS Topic Outputs
 # -----------------------------------------------------------------------------
 output "sns_topic_arn" {
-  description = "ARN of the SNS topic for dmg-inbound-callrecording-transcription"
-  value       = aws_sns_topic.dmg_inbound_callrecording_transcript.arn
+  description = "ARN of the SNS topic for adom-inbound-callrecording-transcription"
+  value       = aws_sns_topic.adom_inbound_callrecording_transcript.arn
 }
 
 # -----------------------------------------------------------------------------
 # SQS Queue Outputs - Transcription
 # -----------------------------------------------------------------------------
 output "sqs_queue_url" {
-  description = "URL of the SQS queue for dmg-inbound-callrecording-transcription"
-  value       = aws_sqs_queue.dmg_inbound_callrecording_transcript.id
+  description = "URL of the SQS queue for adom-inbound-callrecording-transcription"
+  value       = aws_sqs_queue.adom_inbound_callrecording_transcript.id
 }
 
 output "sqs_queue_arn" {
   description = "ARN of the SQS queue for transcription"
-  value       = aws_sqs_queue.dmg_inbound_callrecording_transcript.arn
+  value       = aws_sqs_queue.adom_inbound_callrecording_transcript.arn
 }
 
 output "sqs_dlq_arn" {
   description = "ARN of the SQS dead letter queue for transcription"
-  value       = aws_sqs_queue.dmg_inbound_callrecording_transcript_dlq.arn
+  value       = aws_sqs_queue.adom_inbound_callrecording_transcript_dlq.arn
 }
 
 # -----------------------------------------------------------------------------
 # SQS Queue Outputs - Persistence
 # -----------------------------------------------------------------------------
 output "sqs_persistence_queue_url" {
-  description = "URL of the SQS queue for dmg-inbound-callrecording-persistence"
-  value       = aws_sqs_queue.dmg_inbound_callrecording_persistence.id
+  description = "URL of the SQS queue for adom-inbound-callrecording-persistence"
+  value       = aws_sqs_queue.adom_inbound_callrecording_persistence.id
 }
 
 output "sqs_persistence_queue_arn" {
   description = "ARN of the SQS queue for persistence"
-  value       = aws_sqs_queue.dmg_inbound_callrecording_persistence.arn
+  value       = aws_sqs_queue.adom_inbound_callrecording_persistence.arn
 }
 
 output "sqs_persistence_dlq_arn" {
   description = "ARN of the SQS dead letter queue for persistence"
-  value       = aws_sqs_queue.dmg_inbound_callrecording_persistence_dlq.arn
+  value       = aws_sqs_queue.adom_inbound_callrecording_persistence_dlq.arn
 }
 
 # -----------------------------------------------------------------------------
@@ -86,33 +86,33 @@ output "sqs_s3_bedrock_output_dlq_arn" {
 # Lambda Function Outputs
 # -----------------------------------------------------------------------------
 output "lambda_transcription_arn" {
-  description = "ARN of dmg-inbound-callrecording-transcription Lambda function"
-  value       = aws_lambda_function.dmg_inbound_callrecording_transcription.arn
+  description = "ARN of adom-inbound-callrecording-transcription Lambda function"
+  value       = aws_lambda_function.adom_inbound_callrecording_transcription.arn
 }
 
 output "lambda_transcription_name" {
-  description = "Name of dmg-inbound-callrecording-transcription Lambda function"
-  value       = aws_lambda_function.dmg_inbound_callrecording_transcription.function_name
+  description = "Name of adom-inbound-callrecording-transcription Lambda function"
+  value       = aws_lambda_function.adom_inbound_callrecording_transcription.function_name
 }
 
 output "lambda_persistence_arn" {
-  description = "ARN of dmg-inbound-callrecording-persistence Lambda function"
-  value       = aws_lambda_function.dmg_inbound_callrecording_persistence.arn
+  description = "ARN of adom-inbound-callrecording-persistence Lambda function"
+  value       = aws_lambda_function.adom_inbound_callrecording_persistence.arn
 }
 
 output "lambda_persistence_name" {
-  description = "Name of dmg-inbound-callrecording-persistence Lambda function"
-  value       = aws_lambda_function.dmg_inbound_callrecording_persistence.function_name
+  description = "Name of adom-inbound-callrecording-persistence Lambda function"
+  value       = aws_lambda_function.adom_inbound_callrecording_persistence.function_name
 }
 
 output "lambda_retrieval_arn" {
-  description = "ARN of dmg-inbound-callrecording-retrieval Lambda function"
-  value       = aws_lambda_function.dmg_inbound_callrecording_retrieval.arn
+  description = "ARN of adom-inbound-callrecording-retrieval Lambda function"
+  value       = aws_lambda_function.adom_inbound_callrecording_retrieval.arn
 }
 
 output "lambda_retrieval_name" {
-  description = "Name of dmg-inbound-callrecording-retrieval Lambda function"
-  value       = aws_lambda_function.dmg_inbound_callrecording_retrieval.function_name
+  description = "Name of adom-inbound-callrecording-retrieval Lambda function"
+  value       = aws_lambda_function.adom_inbound_callrecording_retrieval.function_name
 }
 
 # -----------------------------------------------------------------------------

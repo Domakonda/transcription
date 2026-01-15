@@ -54,8 +54,8 @@ resource "aws_iam_policy" "lambda_custom" {
           "sqs:GetQueueAttributes"
         ]
         Resource = [
-          aws_sqs_queue.dmg_inbound_callrecording_transcript.arn,
-          aws_sqs_queue.dmg_inbound_callrecording_persistence.arn,
+          aws_sqs_queue.adom_inbound_callrecording_transcript.arn,
+          aws_sqs_queue.adom_inbound_callrecording_persistence.arn,
           aws_sqs_queue.s3_bedrock_output.arn
         ]
       },

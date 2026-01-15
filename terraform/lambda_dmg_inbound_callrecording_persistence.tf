@@ -1,13 +1,13 @@
-# Lambda Function: dmg-inbound-callrecording-persistence
+# Lambda Function: adom-inbound-callrecording-persistence
 # Triggered by SQS queue (subscribed to S3 events), reads S3 and writes to DynamoDB
 
 # Note: For mono repo architecture, application code is deployed separately
 # Initial deployment uses placeholder Lambda to allow infrastructure provisioning
 
 # Lambda Function
-resource "aws_lambda_function" "dmg_inbound_callrecording_persistence" {
+resource "aws_lambda_function" "adom_inbound_callrecording_persistence" {
   filename         = "${path.module}/lambda_placeholder_persistence.zip"
-  function_name    = "dmg-inbound-callrecording-persistence"
+  function_name    = "adom-inbound-callrecording-persistence"
   role             = aws_iam_role.lambda_execution.arn
   handler          = "index.handler"
   source_code_hash = filebase64sha256("${path.module}/lambda_placeholder_persistence.zip")
@@ -29,15 +29,15 @@ resource "aws_lambda_function" "dmg_inbound_callrecording_persistence" {
   tags = merge(
     local.common_tags,
     {
-      Name = "dmg-inbound-callrecording-persistence"
+      Name = "adom-inbound-callrecording-persistence"
     }
   )
 }
 
 # Lambda Event Source Mapping (SQS trigger)
 resource "aws_lambda_event_source_mapping" "sqs_to_lambda_persistence" {
-  event_source_arn = aws_sqs_queue.dmg_inbound_callrecording_persistence.arn
-  function_name    = aws_lambda_function.dmg_inbound_callrecording_persistence.arn
+  event_source_arn = aws_sqs_queue.adom_inbound_callrecording_persistence.arn
+  function_name    = aws_lambda_function.adom_inbound_callrecording_persistence.arn
   batch_size       = 1 # Process one message at a time
   enabled          = true
 
@@ -48,8 +48,8 @@ resource "aws_lambda_event_source_mapping" "sqs_to_lambda_persistence" {
 }
 
 # CloudWatch Log Group
-resource "aws_cloudwatch_log_group" "dmg_inbound_callrecording_persistence" {
-  name              = "/aws/lambda/dmg-inbound-callrecording-persistence"
+resource "aws_cloudwatch_log_group" "adom_inbound_callrecording_persistence" {
+  name              = "/aws/lambda/adom-inbound-callrecording-persistence"
   retention_in_days = 14
 
   tags = local.common_tags
